@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 09:08 AM
+-- Generation Time: Nov 05, 2024 at 01:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -32,7 +32,7 @@ CREATE TABLE `admin` (
   `username` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `email`, `password`, `status`) VALUES
-(1, 'Admin', 'dmart.admin@dmart.com', '0192023a7bbd73250516f069df18b500', 1);
+(1, 'admin', 'dmart.admin@dmart.com', '0192023a7bbd73250516f069df18b500', 1);
 
 --
 -- Indexes for dumped tables

@@ -24,7 +24,7 @@
                             <i class="bi bi-person-circle"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#"><?php if(isset($_SESSION['username'])){ echo $_SESSION['username']; } ?></a></li>
+                            <li><a class="dropdown-item" href="admin_account_settings.php"><?php if(isset($_SESSION['username'])){ echo $_SESSION['username']; } ?></a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                         </ul>

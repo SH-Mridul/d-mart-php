@@ -71,6 +71,15 @@
                             }
                         ?>
                     </span>
+
+                    <span class="text-success text-center">
+                        <?php 
+                            if(isset($_SESSION['success'])){ 
+                                echo $_SESSION['success'];
+                                unset($_SESSION['success']); 
+                            }
+                        ?>
+                    </span>
                 </div>
                 
                 <button type="submit" class="btn btn-success btn-block mt-2">LOGIN</button>
