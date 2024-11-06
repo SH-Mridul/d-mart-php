@@ -16,9 +16,9 @@
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="new_brand_add_form.php">Add New Brand</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Categories</a></li>
+                            <li><a class="dropdown-item" href="categories.php">Categories</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Add New Category</a></li>
+                            <li><a class="dropdown-item" href="new_category_add_form.php">Add New Category</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Sizes</a></li>
                             <li><hr class="dropdown-divider"></li>
