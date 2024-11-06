@@ -11,7 +11,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #4CAF50;
+            background-color: #9574e2;
             margin: 0;
             padding: 0;
         }
@@ -31,12 +31,12 @@
         }
 
         .btn-success {
-            background-color: #4CAF50;
+            background-color: #9574e2;
             border: none;
         }
 
         .btn-success:hover {
-            background-color: #45a049;
+            background-color: #7a45f2;
         }
 
         .card-body a {

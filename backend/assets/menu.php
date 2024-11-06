@@ -1,13 +1,34 @@
 <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="#">Admin Panel</a>
+            <a class="navbar-brand" href="index.php">D-Mart</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Product settings
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="productDropdown">
+                            <li><a class="dropdown-item" href="#">Brands</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Add New Brand</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Categories</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Add New Category</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Sizes</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Add New Size</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Products</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Add New Product</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
@@ -24,7 +45,11 @@
                             <i class="bi bi-person-circle"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="admin_account_settings.php"><?php if(isset($_SESSION['username'])){ echo $_SESSION['username']; } ?></a></li>
+                            <li><a class="dropdown-item text-success" href="admin_account_settings.php"><b><?php if(isset($_SESSION['username'])){ echo $_SESSION['username']; } ?></b></a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="admin_list.php">Admin Users</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="new_admin_add_form.php">Add New Admin</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                         </ul>
