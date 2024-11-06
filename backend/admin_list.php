@@ -19,7 +19,7 @@
             <div class="col-md-12 mb-4">
                 <div class="card card-user-info">
                     <div class="card-body">
-                        <table class="table table-striped table-bordered mt-3">
+                        <table class="table table-striped table-bordered table-sm table-hover table-responsive mt-3">
                             <thead>
                                 <tr>
                                     <th>SL</th>
@@ -29,22 +29,22 @@
                             </thead>
                             <tbody>
                                 <?php
-                                // Fetch all admins from the database
-                                $sql = "SELECT id, username, email FROM admin";
-                                $result = $conn->query($sql);
+                                    // Fetch all admins from the database
+                                    $sql = "SELECT id, username, email FROM admin";
+                                    $result = $conn->query($sql);
 
-                                if ($result->num_rows > 0) {
-                                    $sl = 1; // Serial number
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
-                                        echo "<td>" . $sl++ . "</td>";
-                                        echo "<td>" . htmlspecialchars($row['username']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                                        echo "</tr>";
+                                    if ($result->num_rows > 0) {
+                                        $sl = 1; // Serial number
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>";
+                                            echo "<td>" . $sl++ . "</td>";
+                                            echo "<td>" . htmlspecialchars($row['username']) . "</td>";
+                                            echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='3'>No admins found.</td></tr>";
                                     }
-                                } else {
-                                    echo "<tr><td colspan='3'>No admins found.</td></tr>";
-                                }
                                 ?>
                             </tbody>
                         </table>

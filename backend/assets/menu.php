@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.php">D-Mart</a>
+            <a class="navbar-brand" href="index.php"><b>D-Mart</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -12,9 +12,9 @@
                             Product settings
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="productDropdown">
-                            <li><a class="dropdown-item" href="#">Brands</a></li>
+                            <li><a class="dropdown-item" href="brands.php">Brands</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Add New Brand</a></li>
+                            <li><a class="dropdown-item" href="new_brand_add_form.php">Add New Brand</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Categories</a></li>
                             <li><hr class="dropdown-divider"></li>
