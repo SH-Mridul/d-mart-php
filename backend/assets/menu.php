@@ -20,9 +20,9 @@
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="new_category_add_form.php">Add New Category</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Sizes</a></li>
+                            <li><a class="dropdown-item" href="sizes.php">Sizes</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Add New Size</a></li>
+                            <li><a class="dropdown-item" href="new_size_add_form.php">Add New Size</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Products</a></li>
                             <li><hr class="dropdown-divider"></li>
