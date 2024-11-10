@@ -24,9 +24,9 @@
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="new_size_add_form.php">Add New Size</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Products</a></li>
+                            <li><a class="dropdown-item" href="products.php">Products</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Add New Product</a></li>
+                            <li><a class="dropdown-item" href="new_product_add_form.php">Add New Product</a></li>
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
