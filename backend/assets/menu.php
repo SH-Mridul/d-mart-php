@@ -29,7 +29,7 @@
                             <li><a class="dropdown-item" href="new_product_add_form.php">Add New Product</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.php">Orders</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
                     <li class="nav-item">

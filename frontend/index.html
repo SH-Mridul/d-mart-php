@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D-Mart - Find your footware</title>
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="preload" href="./assets/images/hero-banner.png" as="image">
+
+  <style>
+    /* Styling for the dropdown menu */
+      .nav-action {
+          position: relative;
+      }
+
+      .dropdown-menu {
+          display: none; /* Hidden by default */
+          position: absolute;
+          top: 100%; /* Positions the dropdown below the button */
+          left: 0;
+          background-color: white;
+          list-style: none;
+          padding: 10px;
+          border: 1px solid #ddd;
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+          width: 200px;
+          z-index: 1000;
+      }
+
+      .nav-action:hover .dropdown-menu {
+          display: block; /* Show the dropdown on hover */
+      }
+
+      .dropdown-menu li {
+          padding: 8px 12px;
+          cursor: pointer;
+      }
+
+      .dropdown-menu li a {
+          color: #333;
+          text-decoration: none;
+      }
+
+      .dropdown-menu li:hover {
+          background-color: #f0f0f0;
+      }
+
+  </style>
+
+</head>
+
+<body id="top">
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="#" class="logo">
+         <h3>D-Mart</h3>
+      </a>
+
+      <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+      <nav class="navbar" data-navbar>
+
+        <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+
+        <a href="#" class="logo">
+           <center><h3>D-Mart</h3></center>
+        </a>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link">Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link">Gents</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link">Ladies</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link">Contact</a>
+          </li>
+
+        </ul>
+
+        <ul class="nav-action-list">
+
+          <li>
+            <button class="nav-action-btn">
+              <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+
+              <span class="nav-action-text">Search</span>
+            </button>
+          </li>
+
+          <!-- <li>
+            <a href="Login.html" class="nav-action-btn">
+              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+              <span class="nav-action-text">Login / Register</span>
+            </a>
+          </li> -->
+
+
+          <li class="nav-action">
+          <a href="javascript:void(0);" class="nav-action-btn">
+              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+              <span class="nav-action-text">Account</span>
+          </a>
+
+          <!-- Dropdown Menu -->
+          <ul class="dropdown-menu">
+              <li id="loggedInUserName" style="color: green;"></li>
+              <li><a class="btn" onclick="logoutUser()" id="logoutBtn">Logout</a></li>
+          </ul>
+        </li>
+
+          <li>
+            <button class="nav-action-btn" onclick="cartDetails()">
+              <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
+              <data class="nav-action-text" value="0.00">Basket: <strong id="cart_price">৳0.00</strong></data>
+              <data class="nav-action-badge" value="0" aria-hidden="true" id="cart_item">0</data>
+            </button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <section class="section hero" style="background-image: url('./assets/images/banner-2.jpg')">
+        <div class="container">
+
+          <h2 class="h1 hero-title">
+            New<strong>Shoes Collection</strong>
+          </h2>
+
+          <p class="hero-text">
+            Competently expedite alternative benefits whereas leading-edge catalysts for change. Globally leverage
+            existing an
+            expanded array of leadership.
+          </p>
+
+        </div>
+      </section>
+
+      <section class="section product">
+        <div class="container">
+
+          <ul class="product-list">
+
+            <li class="product-item" id="product_1" data-id="1">
+              <div class="product-card" tabindex="0">
+
+                <figure class="card-banner">
+                  <img src="./assets/images/product-1.jpg" width="312" height="350" loading="lazy"
+                    alt="Running Sneaker Shoes" class="image-contain" id="product_1_image_url"  data-image-url="./assets/images/product-1.jpg">
+                </figure>
+
+                <div class="card-content">
+
+                  <div class="card-cat">
+                    <a href="#" class="card-cat-link">Men</a> /
+                    <a href="#" class="card-cat-link">Women</a>
+                  </div>
+
+                  <h3 class="h3 card-title">
+                    <a href="#" id="product_1_name">Running Sneaker Shoes</a>
+                  </h3>
+
+                  <data class="card-price" value="1880" id="product_1_price">৳1880</data>
+                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_1')">Details</a></center>
+                </div>
+
+              </div>
+            </li>
+
+
+
+
+            <li class="product-item" id="product_2" data-id="2">
+              <div class="product-card" tabindex="0">
+
+                <figure class="card-banner">
+                  <img src="./assets/images/product-2.jpg" width="312" height="350" loading="lazy"
+                    alt="Leather Mens Slipper" class="image-contain" id="product_2_image_url"  data-image-url="./assets/images/product-2.jpg">
+                </figure>
+
+                <div class="card-content">
+
+                  <div class="card-cat">
+                    <a href="#" class="card-cat-link">Men</a> /
+                    <a href="#" class="card-cat-link">Sports</a>
+                  </div>
+
+                  <h3 class="h3 card-title">
+                    <a href="#" id="product_2_name">Leather Mens Slipper</a>
+                  </h3>
+
+                  <data class="card-price" value="190.85" id="product_2_price"> ৳190.85</data>
+                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_2')">Details</a></center>
+                </div>
+
+              </div>
+            </li>
+
+
+
+
+
+            <li class="product-item" id="product_3" data-id="3">
+              <div class="product-card" tabindex="0">
+
+                <figure class="card-banner">
+                  <img src="./assets/images/product-3.jpg" width="312" height="350" loading="lazy"
+                    alt="Simple Fabric Shoe" class="image-contain" id="product_3_image_url"  data-image-url="./assets/images/product-3.jpg">
+
+                 
+                </figure>
+
+                <div class="card-content">
+
+                  <div class="card-cat">
+                    <a href="#" class="card-cat-link">Men</a> /
+                    <a href="#" class="card-cat-link">Women</a>
+                  </div>
+
+                  <h3 class="h3 card-title">
+                    <a href="#" id="product_3_name">Simple Fabric Shoe</a>
+                  </h3>
+
+                  <data class="card-price" value="160.85" id="product_3_price"> ৳160.85</data>
+                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_3')">Details</a></center>
+                </div>
+
+              </div>
+            </li>
+
+
+
+
+
+            <li class="product-item" id="product_4" data-id="4">
+              <div class="product-card" tabindex="0">
+
+                <figure class="card-banner">
+                  <img src="./assets/images/product-4.jpg" width="312" height="350" loading="lazy"
+                    alt="Air Jordan 7 Retro " class="image-contain" id="product_4_image_url"  data-image-url="./assets/images/product-4.jpg">
+                </figure>
+
+                <div class="card-content">
+
+                  <div class="card-cat">
+                    <a href="#" class="card-cat-link">Men</a> /
+                    <a href="#" class="card-cat-link">Sports</a>
+                  </div>
+
+                  <h3 class="h3 card-title">
+                    <a href="#" id="product_4_name">Air Jordan 7 Retro </a>
+                  </h3>
+
+                  <data class="card-price" value="170.85" id="product_4_price"> ৳170.85 <del> ৳200.21</del></data>
+                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_4')">Details</a></center>
+                </div>
+              </div>
+            </li>
+
+
+
+
+            <li class="product-item" id="product_5" data-id="5">
+              <div class="product-card" tabindex="0">
+
+                <figure class="card-banner">
+                  <img src="./assets/images/girl-1.avif" width="312" height="350" loading="lazy"
+                    alt="Nike Air Max 270 SE" class="image-contain" id="product_5_image_url"  data-image-url="./assets/images/girl-1.avif">
+                </figure>
+
+                <div class="card-content">
+
+                  <div class="card-cat">
+                    <a href="#" class="card-cat-link">Men</a> /
+                    <a href="#" class="card-cat-link">Women</a>
+                  </div>
+
+                  <h3 class="h3 card-title">
+                    <a href="#" id="product_5_name">Nike Air Max 270 SE</a>
+                  </h3>
+
+                  <data class="card-price" value="120.85" id="product_5_price"> ৳120.85</data>
+                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_5')">Details</a></center>
+                </div>
+
+              </div>
+            </li>
+
+
+
+
+
+            <li class="product-item" id="product_6" data-id="6">
+              <div class="product-card" tabindex="0">
+
+                <figure class="card-banner">
+                  <img src="./assets/images/girl-2.jpg" width="312" height="350" loading="lazy"
+                    alt="Adidas Sneakers Shoes" class="image-contain" id="product_6_image_url"  data-image-url="./assets/images/girl-2.jpg">
+                </figure>
+
+                <div class="card-content">
+
+                  <div class="card-cat">
+                    <a href="#" class="card-cat-link">Men</a> /
+                    <a href="#" class="card-cat-link">Women</a>
+                  </div>
+
+                  <h3 class="h3 card-title">
+                    <a href="#" id="product_6_name">Adidas Sneakers Shoes</a>
+                  </h3>
+
+                  <data class="card-price" value="100.85" id="product_6_price"> ৳100.85</data>
+                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_6')">Details</a></center>
+                </div>
+
+              </div>
+            </li>
+
+
+
+
+            <li class="product-item" id="product_7" data-id="7">
+              <div class="product-card" tabindex="0">
+
+                <figure class="card-banner">
+                  <img src="./assets/images/girl-3.jpg" width="312" height="350" loading="lazy"
+                    alt="Nike Basketball shoes" class="image-contain" id="product_7_image_url"  data-image-url="./assets/images/girl-3.jpg">
+                </figure>
+
+                <div class="card-content">
+
+                  <div class="card-cat">
+                    <a href="#" class="card-cat-link">Men</a> /
+                    <a href="#" class="card-cat-link">Sports</a>
+                  </div>
+
+                  <h3 class="h3 card-title">
+                    <a href="#" id="product_7_name">Nike Basketball shoes</a>
+                  </h3>
+
+                  <data class="card-price" value="120.85" id="product_7_price"> ৳120.85</data>
+                  <center><a type="button" onclick="storeProductData('product_7')" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;">Details</a></center>
+                </div>
+
+              </div>
+            </li>
+
+
+
+
+
+
+
+            <li class="product-item" id="product_8" data-id="8">
+              <div class="product-card" tabindex="0">
+
+                <figure class="card-banner">
+                  <img src="./assets/images/girl-4.jpg" width="312" height="350" loading="lazy"
+                    alt="Simple Fabric Shoe" class="image-contain" id="product_8_image_url"  data-image-url="./assets/images/girl-4.jpg">
+                </figure>
+
+                <div class="card-content">
+
+                  <div class="card-cat">
+                    <a href="#" class="card-cat-link">Men</a> /
+                    <a href="#" class="card-cat-link">Women</a>
+                  </div>
+
+                  <h3 class="h3 card-title">
+                    <a href="#" id="product_8_name">Simple Fabric Shoe</a>
+                  </h3>
+
+                  <data class="card-price" value="100.85" id="product_8_price"> ৳100.85</data>
+                  <center><a type="button" onclick="storeProductData('product_8')" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;">Details</a></center>
+                </div>
+
+              </div>
+            </li>
+
+
+
+
+          </ul>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+
+  <footer class="footer">
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2024 <a href="#" class="copyright-link">Nusayba Haque Jerin</a>. All Rights Reserved
+        </p>
+
+      </div>
+    </div>
+
+  </footer>
+
+
+  <a href="#top" class="go-top-btn" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+  <script src="./assets/js/script.js"></script>
+  <script src="./assets/js/index.js"></script>
+ <script src="./assets/js/login_check.js"></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
