@@ -32,19 +32,6 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     }
 
     if (valid) {
-        // Get registered users from local storage
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        const currentUser = users.find(user => user.email === email && user.password === password);
-
-        if (currentUser) {
-            // Store current user info in sessionStorage for session management
-            sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
-
-            // Redirect to home page or dashboard
-            window.location.href = "./index.html";
-        } else {
-            document.getElementById("passwordError").textContent = "Invalid email or password.";
-            document.getElementById("passwordError").style.color = "red";
-        }
+        document.getElementById("loginForm").submit(); // Submit the form programmatically
     }
 });

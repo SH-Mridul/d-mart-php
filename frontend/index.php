@@ -1,3 +1,8 @@
+<?php
+  require 'php_files/database_connection.php'; 
+  require 'php_files/login_check.php'; 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,8 +132,8 @@
 
           <!-- Dropdown Menu -->
           <ul class="dropdown-menu">
-              <li id="loggedInUserName" style="color: green;"></li>
-              <li><a class="btn" onclick="logoutUser()" id="logoutBtn">Logout</a></li>
+              <li style="color: green;"><?php echo $_SESSION['name']; ?></li>
+              <li><a class="btn" href="php_files/logout.php">Logout</a></li>
           </ul>
         </li>
 
@@ -443,9 +448,9 @@
   </a>
 
 
-  <script src="./assets/js/script.js"></script>
+  <!-- <script src="./assets/js/script.js"></script>
   <script src="./assets/js/index.js"></script>
- <script src="./assets/js/login_check.js"></script>
+ <script src="./assets/js/login_check.js"></script> -->
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

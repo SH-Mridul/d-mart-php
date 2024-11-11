@@ -27,6 +27,18 @@
     </style>
   </head>
   <body>
+    <?php session_start(); ?>
+
+  <!-- Set default values in case session variables are not set -->
+  <input type="hidden" id="notification_error" value="<?php echo isset($_SESSION['error']) ? $_SESSION['error'] : ''; ?>">
+  <input type="hidden" id="notification_success" value="<?php echo isset($_SESSION['success']) ? $_SESSION['success'] : ''; ?>">
+
+  <?php 
+    // Unset session variables after using them
+    unset($_SESSION['error']);
+    unset($_SESSION['success']);
+  ?>
+
     <section class="bg-light p-3 p-md-4 p-xl-5">
       <div class="container">
         <div class="row justify-content-center">
@@ -65,14 +77,14 @@
                         </div>
                       </div>
 
-                      <form id="loginForm" >
+                      <form id="loginForm" action="php_files/login_user.php" method = "post">
                           <div class="form-group mb-3">
-                              <input type="email" class="form-control form-control-sm" id="email" placeholder="Enter Email Address">
+                              <input type="email" class="form-control form-control-sm" name = "email" id="email" placeholder="Enter Email Address">
                               <span id="emailError"></span>
                           </div>
 
                           <div class="form-group mb-3">
-                              <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter password">
+                              <input type="password" class="form-control form-control-sm" name = "password" id="password" placeholder="Enter password">
                               <span id="passwordError"></span>
                           </div>
                           <div class="col-12">
@@ -87,7 +99,7 @@
                       <div class="row">
                         <div class="col-12">
                           <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center mt-5">
-                            <a href="./registration.html" class="link-secondary text-decoration-none">Create new account</a>
+                            <a href="./registration.php" class="link-secondary text-decoration-none">Create new account</a>
                             <a href="#!" class="link-secondary text-decoration-none">Forgot password</a>
                           </div>
                         </div>
@@ -103,5 +115,25 @@
     </section>
     <!-- script -->
      <script src="./assets/js/login.js"></script>
+         <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Get the value from the element with a specific ID
+        var error     = document.getElementById('notification_error').value;
+        var success   = document.getElementById('notification_success').value;
+        
+       if(error.length !== 0){
+        setTimeout(function() {
+            alert(error);
+        }, 500); 
+       }
+
+       if(success.length !== 0){
+        setTimeout(function() {
+            alert(success);
+        }, 500); 
+       }
+    });
+
+    </script>
   </body>
 </html>
