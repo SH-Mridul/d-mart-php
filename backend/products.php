@@ -8,6 +8,7 @@
                 p.id AS product_id,
                 p.name AS product_name,
                 p.image_path as image,
+                p.price as price,
                 p.status,
                 b.name AS brand_name,
                 GROUP_CONCAT(DISTINCT c.name ORDER BY c.name ASC SEPARATOR ', ') AS category_names,
@@ -73,6 +74,7 @@
                                     <th>Brand</th>
                                     <th>Categories</th>
                                     <th>Sizes</th>
+                                    <th>Price</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -103,7 +105,7 @@
                                             echo "<span class='badge bg-secondary me-1'>" . htmlspecialchars($size) . "</span>";
                                         }
                                         echo "</td>";
-                                        
+                                        echo "<td class='pt-4'>" . htmlspecialchars($row['price']) . "</td>";
                                         // Action buttons
                                         echo "<td class='pt-4'>
                                                 <a href='edit_product.php?id=" . $row['product_id'] . "' class='btn btn-success btn-sm'>Edit</a>

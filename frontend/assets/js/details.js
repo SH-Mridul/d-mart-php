@@ -12,57 +12,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// function addToCart() {
-//     // Get product details
-//     const productId = document.getElementById("productId").innerText.replace("Product ID: ", "");
-//     const productName = document.getElementById("productName").innerText;
-//     const productPrice = document.getElementById("productPrice").innerText;
-//     const productImage = document.getElementById("productImage").src; // Get image URL
-//     const productSize = document.getElementById("shoeSize").value;
-//     const productQuantity = 1; // Default quantity
-
-//     // Create product object
-//     const product = {
-//         id: productId,
-//         name: productName,
-//         price: productPrice,
-//         image: productImage,
-//         size: productSize,
-//         quantity: productQuantity,
-//     };
-
-//     // Get cart from local storage
-//     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-//     // Check if the product is already in the cart
-//     const existingProductIndex = cart.findIndex(item => item.id === product.id && item.size === product.size);
-
-//     if (existingProductIndex > -1) {
-//         // Update quantity if product is already in the cart
-//         cart[existingProductIndex].quantity += productQuantity;
-//     } else {
-//         // Add new product to cart
-//         cart.push(product);
-//     }
-
-//     // Save updated cart to local storage
-//     localStorage.setItem("cart", JSON.stringify(cart));
-
-//     // Show alert that item has been added
-//     alert(`${product.name} has been added to your cart.`);
-//     location.reload();
-// }
-
-
-
-
 function addToCart() {
     // Get current user information
     const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
     if (!currentUser) {
         alert("Please log in to add items to your cart.");
-        window.location.href = "login.html";
+        window.location.href = "login.php";
         return;
     }
 
@@ -78,11 +34,17 @@ function addToCart() {
     const productPrice = document.getElementById("productPrice").innerText;
     const productImage = document.getElementById("productImage").src;
     const productSize = document.getElementById("shoeSize").value;
+
+    const selectElement = document.getElementById("shoeSize");
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const sizeId = selectedOption.getAttribute("data-size-id");
+
     const productQuantity = 1; // Default quantity
 
     // Create product object
     const product = {
         id: productId,
+        size_id: sizeId,
         name: productName,
         price: productPrice,
         image: productImage,
@@ -105,6 +67,7 @@ function addToCart() {
 
     // Save updated cart for this user to local storage
     localStorage.setItem(cartKey, JSON.stringify(cart));
+    console.log("Cart after adding product:", cart);
 
     // Show alert that item has been added
     alert(`${product.name} has been added to your cart.`);

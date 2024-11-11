@@ -22,19 +22,6 @@ for (let i = 0; i < navElems.length; i++) {
 
 
 
-
-// window.addEventListener("load", (event) => {
-
-//   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-//   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
-//   document.querySelector('#cart_item').textContent = totalQuantity;
-//   const user = getCurrentUser();
-//   document.querySelector('#loggedInUserName').textContent = user.name;
-
-// });
-
-
-
 window.addEventListener("load", (event) => {
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
@@ -58,26 +45,12 @@ window.addEventListener("load", (event) => {
 
 
 
-
-
-// function cartDetails() {
-
-//   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-//   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
-//   if (0 < totalQuantity) {
-//     location.replace("./cart_details.html")
-//   } else {
-//     alert("Cart is empty!");
-//   }
-// }
-
-
 function cartDetails() {
   const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
   if (!currentUser) {
     alert("Please log in to view your cart.");
-    window.location.href = "login.html"; // Redirect to login if not logged in
+    window.location.href = "login.php"; // Redirect to login if not logged in
     return;
   }
 
@@ -88,7 +61,7 @@ function cartDetails() {
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   if (totalQuantity > 0) {
-    location.replace("./cart_details.html"); // Redirect to cart details page
+    location.replace("./cart_details.php"); // Redirect to cart details page
   } else {
     alert("Cart is empty!"); // Alert if the cart is empty
   }
@@ -112,5 +85,5 @@ function getCurrentUser() {
 
 function logoutUser() {
   sessionStorage.removeItem("currentUser");
-  window.location.href = "login.html";
+  window.location.href = "login.php";
 }

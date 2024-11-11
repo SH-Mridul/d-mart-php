@@ -24,6 +24,7 @@
         if ($product_result->num_rows > 0) {
             $product = $product_result->fetch_assoc();
             $product_name = $product['name'];
+            $product_price = $product['price'];
             $image_path = $product['image_path'];
             $brand_id = $product['brand_id'];
             $status = $product['status'];
@@ -79,6 +80,11 @@
                             <div class="form-group mb-3">
                                 <label for="product_name">Product Name:</label>
                                 <input type="text" class="form-control form-control-sm" name="product_name" id="product_name" placeholder="Enter product name" value="<?php echo htmlspecialchars($product_name); ?>" required>
+                            </div>
+
+                             <div class="form-group mb-3">
+                                <label for="product_price">Product Name:</label>
+                                <input type="number" class="form-control form-control-sm" id="product_price" name="product_price" step="0.01" min="0" placeholder="0.00" value="<?php echo htmlspecialchars($product_price); ?>" required>
                             </div>
 
                             <!-- Category Dropdown -->

@@ -129,7 +129,7 @@
     <header class="header" data-header>
         <div class="container">
             <div class="overlay" data-overlay></div>
-            <a href="./index.html" class="logo">
+            <a href="./index.php" class="logo">
                 <h3>D-Mart</h3>
             </a>
             <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
@@ -139,13 +139,13 @@
                 <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
                     <ion-icon name="close-outline"></ion-icon>
                 </button>
-                <a href="#" class="logo">
+                <a href="./index.php" class="logo">
                     <center>
                         <h3>D-Mart</h3>
                     </center>
                 </a>
                 <ul class="navbar-list">
-                    <li class="navbar-item"><a href="./index.html" class="navbar-link">Home</a></li>
+                    <li class="navbar-item"><a href="./index.php" class="navbar-link">Home</a></li>
                     <li class="navbar-item"><a href="./index.html" class="navbar-link">Gents</a></li>
                     <li class="navbar-item"><a href="./index.html" class="navbar-link">Ladies</a></li>
                     <li class="navbar-item"><a href="./index.html" class="navbar-link">Contact</a></li>

@@ -1,6 +1,52 @@
 <?php
-  require 'php_files/database_connection.php'; 
-  require 'php_files/login_check.php'; 
+    require 'php_files/login_check.php'; 
+    require 'php_files/database_connection.php'; 
+
+    // Fetch categories from the database
+    $categories_sql = "SELECT id, name FROM categories WHERE status = 1";
+    $categories = $conn->query($categories_sql);
+
+    // Check if a category ID is set in the URL
+    $categoryCondition = "";
+    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+        $category_id = $_GET['id'];
+        $categoryCondition = "AND c.id = $category_id";
+    }
+
+    // Fetch products with an optional filter by category
+    $product_sql = "
+        SELECT 
+            p.id AS product_id,
+            p.name AS product_name,
+            p.image_path AS image,
+            p.price AS price,
+            p.status,
+            b.name AS brand_name,
+            GROUP_CONCAT(DISTINCT CONCAT(c.id, ':', c.name) ORDER BY c.name ASC SEPARATOR ', ') AS category_names,
+            GROUP_CONCAT(DISTINCT s.name ORDER BY s.name ASC SEPARATOR ', ') AS size_names
+        FROM 
+            products p
+        LEFT JOIN 
+            brand b ON p.brand_id = b.id
+        LEFT JOIN 
+            product_categories pc ON p.id = pc.product_id
+        LEFT JOIN 
+            categories c ON pc.category_id = c.id
+        LEFT JOIN 
+            product_sizes ps ON p.id = ps.product_id
+        LEFT JOIN 
+            sizes s ON ps.size_id = s.id
+        WHERE 
+            p.status = 1
+            $categoryCondition
+        GROUP BY 
+            p.id
+        ORDER BY 
+            p.name ASC;
+    ";
+
+    // Execute the query
+    $products = $conn->query($product_sql);
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +114,7 @@
 
       <div class="overlay" data-overlay></div>
 
-      <a href="#" class="logo">
+      <a href="index.php" class="logo">
          <h3>D-Mart</h3>
       </a>
 
@@ -82,27 +128,23 @@
           <ion-icon name="close-outline"></ion-icon>
         </button>
 
-        <a href="#" class="logo">
+        <a href="index.php" class="logo">
            <center><h3>D-Mart</h3></center>
         </a>
 
         <ul class="navbar-list">
 
           <li class="navbar-item">
-            <a href="#" class="navbar-link">Home</a>
+            <a href="index.php" class="navbar-link">Home</a>
           </li>
 
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Gents</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Ladies</a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link">Contact</a>
-          </li>
+         <!-- dynamic menu -->
+          <?php  
+            // Loop through each category and generate a navbar item for each
+            while ($category = $categories->fetch_assoc()) {
+                echo '<li class="navbar-item"><a href="index.php?id='.$category['id'].'" class="navbar-link">' . htmlspecialchars($category['name']) . '</a></li>';
+            }
+          ?>
 
         </ul>
 
@@ -115,13 +157,6 @@
               <span class="nav-action-text">Search</span>
             </button>
           </li>
-
-          <!-- <li>
-            <a href="Login.html" class="nav-action-btn">
-              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-              <span class="nav-action-text">Login / Register</span>
-            </a>
-          </li> -->
 
 
           <li class="nav-action">
@@ -152,8 +187,9 @@
     </div>
   </header>
 
-
-
+  <input type="hidden" id = "name" value = "<?php echo $_SESSION['name'];?>">
+  <input type="hidden" id = "email" value = "<?php echo $_SESSION['email'];?>">
+  <input type="hidden" id= "user_type" value = "<?php echo $_SESSION['user_type'];?>">
 
 
   <main>
@@ -174,251 +210,54 @@
 
         </div>
       </section>
-
+       
       <section class="section product">
         <div class="container">
 
           <ul class="product-list">
 
-            <li class="product-item" id="product_1" data-id="1">
+            <?php while ($product = $products->fetch_assoc()) {?>
+            <li class="product-item" id="<?php echo 'product_'.$product['product_id']; ?>" data-id="<?php echo $product['product_id']; ?>">
               <div class="product-card" tabindex="0">
-
                 <figure class="card-banner">
-                  <img src="./assets/images/product-1.jpg" width="312" height="350" loading="lazy"
-                    alt="Running Sneaker Shoes" class="image-contain" id="product_1_image_url"  data-image-url="./assets/images/product-1.jpg">
+                  <img src="<?php echo '..//backend/'.$product['image'];?>" width="312" height="350" loading="lazy"
+                    alt="Running Sneaker Shoes" class="image-contain" id="<?php echo 'product_'.$product['product_id'].'_image_url'; ?>"  data-image-url="<?php echo '..//backend/'.$product['image'];?>">
                 </figure>
 
                 <div class="card-content">
 
                   <div class="card-cat">
-                    <a href="#" class="card-cat-link">Men</a> /
-                    <a href="#" class="card-cat-link">Women</a>
+                    <?php
+                      $counter = 0;
+                      $categories = explode(',', $product['category_names']);
+                      foreach ($categories as $category) {
+                        list($category_id, $category_name) = explode(':', $category);
+                        if($counter < count( $categories)-1){
+                           echo "<a href='index.php?id=".htmlspecialchars($category_id)."' class='card-cat-link'>" . htmlspecialchars($category_name) . "</a> /";
+                        }else{
+                           echo "<a href='#' class='card-cat-link'>" . htmlspecialchars($category_name) . "</a>";
+                        }
+
+                        $counter++;
+                      }
+                    ?>
+                   
+                    
+                    <!-- <a href="#" class="card-cat-link">Women</a> -->
                   </div>
 
                   <h3 class="h3 card-title">
-                    <a href="#" id="product_1_name">Running Sneaker Shoes</a>
+                    <a href="#" id="<?php echo 'product_'.$product['product_id'].'_name'?>"><?php echo htmlspecialchars($product['product_name'])?></a>
                   </h3>
 
-                  <data class="card-price" value="1880" id="product_1_price">৳1880</data>
-                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_1')">Details</a></center>
+                  <data class="card-price" value="<?php echo htmlspecialchars($product['price'])?>" id="<?php echo 'product_'.$product['product_id'].'_price'?>">৳<?php echo htmlspecialchars($product['price'])?></data>
+                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('<?php echo 'product_'.$product['product_id']; ?>')">Details</a></center>
                 </div>
 
               </div>
             </li>
 
-
-
-
-            <li class="product-item" id="product_2" data-id="2">
-              <div class="product-card" tabindex="0">
-
-                <figure class="card-banner">
-                  <img src="./assets/images/product-2.jpg" width="312" height="350" loading="lazy"
-                    alt="Leather Mens Slipper" class="image-contain" id="product_2_image_url"  data-image-url="./assets/images/product-2.jpg">
-                </figure>
-
-                <div class="card-content">
-
-                  <div class="card-cat">
-                    <a href="#" class="card-cat-link">Men</a> /
-                    <a href="#" class="card-cat-link">Sports</a>
-                  </div>
-
-                  <h3 class="h3 card-title">
-                    <a href="#" id="product_2_name">Leather Mens Slipper</a>
-                  </h3>
-
-                  <data class="card-price" value="190.85" id="product_2_price"> ৳190.85</data>
-                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_2')">Details</a></center>
-                </div>
-
-              </div>
-            </li>
-
-
-
-
-
-            <li class="product-item" id="product_3" data-id="3">
-              <div class="product-card" tabindex="0">
-
-                <figure class="card-banner">
-                  <img src="./assets/images/product-3.jpg" width="312" height="350" loading="lazy"
-                    alt="Simple Fabric Shoe" class="image-contain" id="product_3_image_url"  data-image-url="./assets/images/product-3.jpg">
-
-                 
-                </figure>
-
-                <div class="card-content">
-
-                  <div class="card-cat">
-                    <a href="#" class="card-cat-link">Men</a> /
-                    <a href="#" class="card-cat-link">Women</a>
-                  </div>
-
-                  <h3 class="h3 card-title">
-                    <a href="#" id="product_3_name">Simple Fabric Shoe</a>
-                  </h3>
-
-                  <data class="card-price" value="160.85" id="product_3_price"> ৳160.85</data>
-                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_3')">Details</a></center>
-                </div>
-
-              </div>
-            </li>
-
-
-
-
-
-            <li class="product-item" id="product_4" data-id="4">
-              <div class="product-card" tabindex="0">
-
-                <figure class="card-banner">
-                  <img src="./assets/images/product-4.jpg" width="312" height="350" loading="lazy"
-                    alt="Air Jordan 7 Retro " class="image-contain" id="product_4_image_url"  data-image-url="./assets/images/product-4.jpg">
-                </figure>
-
-                <div class="card-content">
-
-                  <div class="card-cat">
-                    <a href="#" class="card-cat-link">Men</a> /
-                    <a href="#" class="card-cat-link">Sports</a>
-                  </div>
-
-                  <h3 class="h3 card-title">
-                    <a href="#" id="product_4_name">Air Jordan 7 Retro </a>
-                  </h3>
-
-                  <data class="card-price" value="170.85" id="product_4_price"> ৳170.85 <del> ৳200.21</del></data>
-                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_4')">Details</a></center>
-                </div>
-              </div>
-            </li>
-
-
-
-
-            <li class="product-item" id="product_5" data-id="5">
-              <div class="product-card" tabindex="0">
-
-                <figure class="card-banner">
-                  <img src="./assets/images/girl-1.avif" width="312" height="350" loading="lazy"
-                    alt="Nike Air Max 270 SE" class="image-contain" id="product_5_image_url"  data-image-url="./assets/images/girl-1.avif">
-                </figure>
-
-                <div class="card-content">
-
-                  <div class="card-cat">
-                    <a href="#" class="card-cat-link">Men</a> /
-                    <a href="#" class="card-cat-link">Women</a>
-                  </div>
-
-                  <h3 class="h3 card-title">
-                    <a href="#" id="product_5_name">Nike Air Max 270 SE</a>
-                  </h3>
-
-                  <data class="card-price" value="120.85" id="product_5_price"> ৳120.85</data>
-                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_5')">Details</a></center>
-                </div>
-
-              </div>
-            </li>
-
-
-
-
-
-            <li class="product-item" id="product_6" data-id="6">
-              <div class="product-card" tabindex="0">
-
-                <figure class="card-banner">
-                  <img src="./assets/images/girl-2.jpg" width="312" height="350" loading="lazy"
-                    alt="Adidas Sneakers Shoes" class="image-contain" id="product_6_image_url"  data-image-url="./assets/images/girl-2.jpg">
-                </figure>
-
-                <div class="card-content">
-
-                  <div class="card-cat">
-                    <a href="#" class="card-cat-link">Men</a> /
-                    <a href="#" class="card-cat-link">Women</a>
-                  </div>
-
-                  <h3 class="h3 card-title">
-                    <a href="#" id="product_6_name">Adidas Sneakers Shoes</a>
-                  </h3>
-
-                  <data class="card-price" value="100.85" id="product_6_price"> ৳100.85</data>
-                  <center><a type="button" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;" onclick="storeProductData('product_6')">Details</a></center>
-                </div>
-
-              </div>
-            </li>
-
-
-
-
-            <li class="product-item" id="product_7" data-id="7">
-              <div class="product-card" tabindex="0">
-
-                <figure class="card-banner">
-                  <img src="./assets/images/girl-3.jpg" width="312" height="350" loading="lazy"
-                    alt="Nike Basketball shoes" class="image-contain" id="product_7_image_url"  data-image-url="./assets/images/girl-3.jpg">
-                </figure>
-
-                <div class="card-content">
-
-                  <div class="card-cat">
-                    <a href="#" class="card-cat-link">Men</a> /
-                    <a href="#" class="card-cat-link">Sports</a>
-                  </div>
-
-                  <h3 class="h3 card-title">
-                    <a href="#" id="product_7_name">Nike Basketball shoes</a>
-                  </h3>
-
-                  <data class="card-price" value="120.85" id="product_7_price"> ৳120.85</data>
-                  <center><a type="button" onclick="storeProductData('product_7')" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;">Details</a></center>
-                </div>
-
-              </div>
-            </li>
-
-
-
-
-
-
-
-            <li class="product-item" id="product_8" data-id="8">
-              <div class="product-card" tabindex="0">
-
-                <figure class="card-banner">
-                  <img src="./assets/images/girl-4.jpg" width="312" height="350" loading="lazy"
-                    alt="Simple Fabric Shoe" class="image-contain" id="product_8_image_url"  data-image-url="./assets/images/girl-4.jpg">
-                </figure>
-
-                <div class="card-content">
-
-                  <div class="card-cat">
-                    <a href="#" class="card-cat-link">Men</a> /
-                    <a href="#" class="card-cat-link">Women</a>
-                  </div>
-
-                  <h3 class="h3 card-title">
-                    <a href="#" id="product_8_name">Simple Fabric Shoe</a>
-                  </h3>
-
-                  <data class="card-price" value="100.85" id="product_8_price"> ৳100.85</data>
-                  <center><a type="button" onclick="storeProductData('product_8')" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 130px; cursor: pointer;">Details</a></center>
-                </div>
-
-              </div>
-            </li>
-
-
-
-
+              <?php } ?>
           </ul>
 
         </div>
@@ -448,9 +287,29 @@
   </a>
 
 
-  <!-- <script src="./assets/js/script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get data from hidden input fields
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const userType = document.getElementById('user_type').value;
+
+        // Create an object for the current user
+        const currentUser = {
+            name: name,
+            email: email,
+            user_type: userType,
+            is_login: true
+        };
+
+        // Store currentUser in sessionStorage
+        sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
+    });
+</script>
+
+  <script src="./assets/js/script.js"></script>
   <script src="./assets/js/index.js"></script>
- <script src="./assets/js/login_check.js"></script> -->
+  <script src="./assets/js/login_check.js"></script>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

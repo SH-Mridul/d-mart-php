@@ -22,6 +22,11 @@
                                 <input type="text" class="form-control form-control-sm" name="product_name" id="product_name" placeholder="Enter product name" required>
                             </div>
 
+                            <div class="form-group mb-3">
+                                <label for="product_price">Product Price:</label>
+                                <input type="number" class="form-control form-control-sm" id="product_price" name="product_price" step="0.01" min="0" placeholder="0.00">
+                            </div>
+
                             <!-- Category Dropdown -->
                             <div class="form-group mb-3">
                                 <label for="category">Category:</label>

@@ -18,6 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $product_name = htmlspecialchars(trim($_POST['product_name']));
 
+     if (empty($_POST['product_price'])) {
+        $_SESSION['error'] = 'Product price name is required.';
+        header("Location: new_product_add_form.php");
+        exit;
+    }
+    $product_price = htmlspecialchars(trim($_POST['product_price']));
+
     // Validate brand
     if (empty($_POST['brand'])) {
         $_SESSION['error'] = 'Brand is required.';
@@ -100,14 +107,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     } else {
         // Insert product into products table
-        $insert_product_query = "INSERT INTO products (name, brand_id, image_path) VALUES (?, ?, ?)";
+        $insert_product_query = "INSERT INTO products (name, price, brand_id, image_path) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($insert_product_query);
         if (!$stmt) {
             $_SESSION['error'] = "Database error: " . $conn->error;
             header("Location: new_product_add_form.php");
             exit;
         }
-        $stmt->bind_param("sis", $product_name, $brand_id, $image_path);
+        $stmt->bind_param("siis", $product_name,$product_price, $brand_id, $image_path);
 
         if ($stmt->execute()) {
             $product_id = $stmt->insert_id;

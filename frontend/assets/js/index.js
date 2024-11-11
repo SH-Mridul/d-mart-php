@@ -26,5 +26,6 @@ function storeProductData(productId) {
     }));
 
     // Redirect to the details page
-    window.location.href = "product-details.html";
+    const url = "product-details.php?id=" + productIdValue;
+    window.location.href = url;
 }

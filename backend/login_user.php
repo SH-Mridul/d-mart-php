@@ -26,6 +26,7 @@
             $_SESSION['username'] = $user['username']; // Assuming you have a username field
             $_SESSION['email'] = $user['email'];
             $_SESSION['is_login'] = true;
+            $_SESSION['user_type'] = "admin";
             unset($_SESSION['error']);
             // Redirect to the dashboard or any other page
             header("Location: index.php");

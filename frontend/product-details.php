@@ -1,3 +1,33 @@
+<?php
+require 'php_files/database_connection.php'; 
+require 'php_files/login_check.php'; 
+
+// Check if a product ID is provided in the URL
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $product_id = $_GET['id'];
+
+    
+    // Query to get the sizes for the specified product
+    $sizes_sql = "
+        SELECT 
+            s.id AS size_id, 
+            s.name AS size_name
+        FROM 
+            product_sizes ps
+        INNER JOIN 
+            sizes s ON ps.size_id = s.id
+        WHERE 
+            ps.product_id = $product_id
+        ORDER BY 
+            s.name ASC;
+    ";
+
+    // Execute the query
+    $sizes_result = $conn->query($sizes_sql);
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,7 +162,7 @@
     <div class="container">
       <div class="overlay" data-overlay></div>
 
-      <a href="index.html" class="logo">
+      <a href="index.php" class="logo">
          <h3>D-Mart</h3>
       </a>
 
@@ -145,15 +175,34 @@
           <ion-icon name="close-outline"></ion-icon>
         </button>
 
-        <a href="index.html" class="logo">
+        <a href="index.php" class="logo">
            <center><h3>D-Mart</h3></center>
         </a>
 
         <ul class="navbar-list">
-          <li class="navbar-item"><a href="index.html" class="navbar-link">Home</a></li>
-          <li class="navbar-item"><a href="#" class="navbar-link">Gents</a></li>
-          <li class="navbar-item"><a href="#" class="navbar-link">Ladies</a></li>
-          <li class="navbar-item"><a href="#" class="navbar-link">Contact</a></li>
+          
+          <li class="navbar-item">
+            <a href="index.php" class="navbar-link">Home</a>
+          </li>
+          <!-- dynamic menu -->
+          <?php  
+            // Fetch categories from the database
+              $query = "SELECT id,name FROM categories where status = 1";
+              $result = $conn->query($query);
+
+              // Check if categories exist and start outputting HTML
+              if ($result->num_rows > 0) {
+                  // Loop through each category and generate a navbar item for each
+                  while ($row = $result->fetch_assoc()) {
+                      echo '<li class="navbar-item"><a href="index.php?id='.$row['id'].'" class="navbar-link">' . htmlspecialchars($row['name']) . '</a></li>';
+                  }
+              } else {
+                  echo '<li class="navbar-item"><a href="#" class="navbar-link">No Categories</a></li>';
+              }
+
+              // Close the database connection
+              $conn->close();
+          ?>
         </ul>
 
         <ul class="nav-action-list">
@@ -169,7 +218,7 @@
               <!-- Dropdown Menu -->
               <ul class="dropdown-menu">
                   <li id="loggedInUserName" style="color: green;"></li>
-                  <li><a class="btn" onclick="logoutUser()" id="logoutBtn">Logout</a></li>
+                  <li><a class="btn"  href="php_files/logout.php">Logout</a></li>
               </ul>
           </li>
         <li>
@@ -184,6 +233,7 @@
       </nav>
     </div>
   </header>
+  
 
   <!-- Product Details Section -->
   <div class="product-details">
@@ -201,17 +251,17 @@
       <!-- Shoe Size Selection -->
       <label for="shoeSize">Select Size:</label>
       <select id="shoeSize">
-        <option value="6">Size 6</option>
-        <option value="7">Size 7</option>
-        <option value="8">Size 8</option>
-        <option value="9">Size 9</option>
-        <option value="10">Size 10</option>
+        <?php 
+          while ($size = $sizes_result->fetch_assoc()) {
+             echo "<option data-size-id='".htmlspecialchars($size['size_id'])."' value='".htmlspecialchars($size['size_name'])."'>".htmlspecialchars($size['size_name'])."</option>";
+          }
+        ?>
       </select>
 
       <!-- Buttons -->
       <div class="button-group">
         <a href="#" class="btn" onclick="addToCart()" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 100px; cursor: pointer;">Add to Cart</a>
-        <a href="index.html" class="btn" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 90px; cursor: pointer;">Go Back</a>
+        <a href="index.php" class="btn" style="background-color:black; color: white; padding: 8px 10px; border: none; border-radius: 4px; font-size: 14px; margin-top: 20px; width: 90px; cursor: pointer;">Go Back</a>
       </div>
     </div>
   </div>
@@ -233,6 +283,7 @@
   <script src="./assets/js/script.js"></script>
   <script src="./assets/js/details.js"></script>
   <script src="./assets/js/login_check.js"></script>
+
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
