@@ -23,6 +23,7 @@
             $user = $result->fetch_assoc();
             
             // Set session variables
+            $_SESSION['id'] = $user['id'];
             $_SESSION['name'] = $user['name']; // Assuming you have a username field
             $_SESSION['email'] = $user['email'];
             $_SESSION['is_login'] = true;

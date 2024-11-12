@@ -3,6 +3,15 @@
     require 'php_files/database_connection.php'; 
     $categories_sql = "SELECT id, name FROM categories WHERE status = 1";
     $categories = $conn->query($categories_sql);
+
+    $user_id = $_SESSION['id'];
+
+        // Query to fetch orders for the current user
+        $orders_sql = "SELECT id, total_amount, contact_number, order_date_time, order_status FROM orders WHERE user_id = ?";
+        $stmt = $conn->prepare($orders_sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -25,8 +34,8 @@
     /* Table styling */
     .cart-table {
         width: 80%;
-        margin-left: 30%;
-        margin-right: 10%;
+        margin-left: 20%;
+        margin-right: 20%;
         padding-top: 30px;
         border-collapse: collapse;
         
@@ -211,31 +220,27 @@
     <table class="cart-table">
         <thead>
             <tr>
-                <th>Product Image</th>
-                <th>Product Size</th>
-                <th>Product Quantity</th>
-                <th>Product Price</th>
-                <th>Total Price</th>
-                <th>Remove</th>
+                <th>Order ID</th>
+                <th>Total Amount (৳)</th>
+                <th>Contact Number</th>
+                <th>Order Date</th>
+                <th>Order Status</th>
             </tr>
         </thead>
         <tbody id="cart_items">
-            <!-- Example static row for demonstration, replace with dynamic data as needed -->
-            <tr>
-                <td><img src="product-image-url.jpg" alt="Product Image"></td>
-                <td>6</td>
-                <td>1</td>
-                <td>৳1880.00</td>
-                <td>৳1880.00</td>
-                <td><button class="remove-btn">Remove</button></td>
-            </tr>
+            <?php while ($order = $result->fetch_assoc()) : ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($order['id']); ?></td>
+                    <td><?php echo htmlspecialchars($order['total_amount']); ?></td>
+                    <td><?php echo htmlspecialchars($order['contact_number']); ?></td>
+                    <td><?php echo htmlspecialchars($order['order_date_time']); ?></td>
+                    <td><?php echo htmlspecialchars($order['order_status']); ?></td>
+                </tr>
+            <?php endwhile; ?>
         </tbody>
     </table>
-    <button  onclick="checkout()" class="checkout-btn">Proceed to Checkout</button>
 </section>
 
-
-    <script src="./assets/js/cart_details.js"></script>
     <script src="./assets/js/script.js"></script>
     <script src="./assets/js/login_check.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

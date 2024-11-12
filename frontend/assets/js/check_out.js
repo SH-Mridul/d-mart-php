@@ -3,7 +3,7 @@ const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
 if (!currentUser) {
     alert("Please log in to view your cart.");
-    window.location.href = "login.php"; // Redirect if user is not logged in
+    window.location.href = "login.html"; // Redirect if user is not logged in
 }
 
 // Create a unique cart key for the current user
@@ -37,7 +37,6 @@ function updateCart() {
                     <th>${itemQuantity}</th>
                     <th>৳${itemPrice.toFixed(2)}</th>
                     <th>৳${itemTotal.toFixed(2)}</th>
-                    <th><button class="remove-btn" onclick="removeFromCart('${item.id}', '${item.size}')">Remove</button></th>
                 </tr>
             `;
     });
@@ -45,13 +44,14 @@ function updateCart() {
     // Display total price at the end of the cart
     cartItemsContainer.innerHTML += `
             <tr>
-                <th colspan="5">Total Price:</th>
+                <th colspan="4">Total Price:</th>
                 <th>৳${totalPrice.toFixed(2)}</th>
             </tr>
         `;
 
     // Update the total price and item count displayed on the page
     document.getElementById("cart_price").innerText = `৳${totalPrice.toFixed(2)}`;
+    document.getElementById("total_amount_form").value = `${totalPrice.toFixed(2)}`;
     document.getElementById("cart_item").innerText = cart.length;
 }
 
@@ -69,7 +69,10 @@ function removeFromCart(productId, productSize) {
 function checkout() {
     const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
     if (totalQuantity > 0) {
-        window.location.href = 'check_out_page.php';
+        alert(`Thank you for being with us,${currentUser.name}!`);
+        // Clear the user's cart from local storage
+        localStorage.removeItem(cartKey);
+        window.location.reload();
     } else {
         alert("Upps! Your cart is empty!");
     }
@@ -77,3 +80,56 @@ function checkout() {
 
 // Initial load to display the cart
 updateCart();
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector(".user-form form");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Capture form data
+        const formData = new FormData(form);
+
+        // Add cart data to formData (if needed)
+        cart.forEach((item, index) => {
+            const itemPrice = parseFloat(item.price.replace('৳', '')) || 0;
+            formData.append(`cart[${index}][id]`, item.id);
+            formData.append(`cart[${index}][size]`, item.size_id);
+            formData.append(`cart[${index}][quantity]`, item.quantity);
+            formData.append(`cart[${index}][price]`, itemPrice);
+        });
+
+        // Send the form data to PHP using fetch
+        fetch('php_files/process_cart.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Clear the cart from localStorage
+                    localStorage.removeItem(cartKey);
+
+                    // Show a success alert to the user
+                    alert('Order placed successfully!');
+                    setTimeout(function () {
+                        window.location.href = "./index.php";
+                    }, 500);
+
+                    // Optionally, redirect the user or reset the form if needed
+                    form.reset();
+                } else {
+                    // Handle an unsuccessful response (optional)
+                    alert('Failed to place order: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while placing the order. Please try again.');
+            });
+    });
+});
+
+
+
+

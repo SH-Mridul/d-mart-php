@@ -218,6 +218,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
               <!-- Dropdown Menu -->
               <ul class="dropdown-menu">
                   <li id="loggedInUserName" style="color: green;"></li>
+                  <li> <a href="order_status.php">Order Status and Details</a></li>
                   <li><a class="btn"  href="php_files/logout.php">Logout</a></li>
               </ul>
           </li>

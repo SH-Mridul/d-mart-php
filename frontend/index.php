@@ -168,6 +168,7 @@
           <!-- Dropdown Menu -->
           <ul class="dropdown-menu">
               <li style="color: green;"><?php echo $_SESSION['name']; ?></li>
+              <li> <a href="order_status.php">Order Status and Details</a></li>
               <li><a class="btn" href="php_files/logout.php">Logout</a></li>
           </ul>
         </li>

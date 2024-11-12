@@ -25,7 +25,7 @@
     /* Table styling */
     .cart-table {
         width: 80%;
-        margin-left: 30%;
+        margin-left: 25%;
         margin-right: 10%;
         padding-top: 30px;
         border-collapse: collapse;
@@ -127,9 +127,99 @@
       .dropdown-menu li:hover {
           background-color: #f0f0f0;
       }
-
   </style>
 
+  <!-- form css -->
+  <style>
+    /* Styling for the form container */
+        .user-form {
+            width: 100%;
+            max-width: 80%;
+            margin: 30px auto;
+            padding: 30px;
+            border-radius: 12px;
+            background-color: #e8f9f5;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Form title */
+        .user-form h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Form labels */
+        .user-form label {
+            display: block; /* Ensures labels are displayed above input fields */
+            margin-bottom: 10px;
+            margin-left: 13px;
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            text-align:left;
+            /* padding-left;100px; */
+        }
+
+        /* Input fields styling */
+        .user-form input[type="text"],
+        .user-form input[type="email"],
+        .user-form textarea {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #9dd5c0;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color: #333;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .user-form input[type="text"]:focus,
+        .user-form input[type="email"]:focus,
+        .user-form textarea:focus {
+            border-color: #39b889;
+        }
+
+        /* Textarea adjustment */
+        .user-form textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        /* Button styling */
+        .user-form .checkout-btn {
+            padding: 12px 20px;
+            background-color: #39b889;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .user-form .checkout-btn:hover {
+            background-color: #2f9e72;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .user-form {
+                width: 90%;
+                padding: 20px;
+            }
+            .user-form input[type="text"],
+            .user-form input[type="email"],
+            .user-form textarea {
+                font-size: 14px;
+            }
+        }
+  </style>
 </head>
 
 <body id="top">
@@ -187,7 +277,7 @@
                         <!-- Dropdown Menu -->
                         <ul class="dropdown-menu">
                             <li id="loggedInUserName" style="color: green;"></li>
-                            <li> <a href="order_status.php">Order Status and Details</a></li>
+                            <li><a href="order_status.php">Order Status and Details</a></li>
                             <li><a class="btn" onclick="logoutUser()" id="logoutBtn">Logout</a></li>
                         </ul>
                     </li>
@@ -216,7 +306,7 @@
                 <th>Product Quantity</th>
                 <th>Product Price</th>
                 <th>Total Price</th>
-                <th>Remove</th>
+                <!-- <th>Remove</th> -->
             </tr>
         </thead>
         <tbody id="cart_items">
@@ -227,15 +317,38 @@
                 <td>1</td>
                 <td>৳1880.00</td>
                 <td>৳1880.00</td>
-                <td><button class="remove-btn">Remove</button></td>
+                <!-- <td><button class="remove-btn">Remove</button></td> -->
             </tr>
         </tbody>
     </table>
-    <button  onclick="checkout()" class="checkout-btn">Proceed to Checkout</button>
+    <!-- <button  onclick="checkout()" class="checkout-btn">Proceed to Checkout</button> -->
 </section>
 
 
-    <script src="./assets/js/cart_details.js"></script>
+<section class="user-form">
+    <h2>Your Information</h2>
+    <form method="POST">
+        <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
+        <input type="hidden" name="total_amount" id="total_amount_form">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" value="<?php echo $_SESSION['name']; ?>"  placeholder="Enter your name" required>
+        
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="Enter your email" value="<?php echo $_SESSION['email']; ?>" id="email" required>
+        
+        <label for="contact_number">Contact Number</label>
+        <input type="text" name="contact_number" placeholder="Enter your contact number" id="contact_number" required>
+        
+        <label for="address">Address</label>
+        <textarea name="address" id="address" rows="4" placeholder="Enter your address" required></textarea>
+        
+        <button type="submit" class="checkout-btn">Checkout</button>
+    </form>
+</section>
+
+
+    <!-- <script></script> -->
+    <script src="./assets/js/check_out.js"></script>
     <script src="./assets/js/script.js"></script>
     <script src="./assets/js/login_check.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
