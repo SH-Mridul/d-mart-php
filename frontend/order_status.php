@@ -31,13 +31,18 @@
         padding: 20px;
     }
 
+    table td{
+        background-color: #ccd9ff;
+    }
+
     /* Table styling */
     .cart-table {
-        width: 80%;
-        margin-left: 20%;
-        margin-right: 20%;
+        width: 850px;
+        margin-left: 370px ;
+        /* margin-right: 20%; */
         padding-top: 30px;
         border-collapse: collapse;
+        /* background-color: red; */
         
     }
 
@@ -216,7 +221,7 @@
 
     
 <section class="table_container">
-    <h2>Your Cart</h2>
+    <h2>Your Orders</h2>
     <table class="cart-table">
         <thead>
             <tr>
@@ -231,10 +236,22 @@
             <?php while ($order = $result->fetch_assoc()) : ?>
                 <tr>
                     <td><?php echo htmlspecialchars($order['id']); ?></td>
-                    <td><?php echo htmlspecialchars($order['total_amount']); ?></td>
+                    <td><?php echo '৳'.htmlspecialchars($order['total_amount']); ?></td>
                     <td><?php echo htmlspecialchars($order['contact_number']); ?></td>
-                    <td><?php echo htmlspecialchars($order['order_date_time']); ?></td>
-                    <td><?php echo htmlspecialchars($order['order_status']); ?></td>
+                    <td><?php echo htmlspecialchars(date("F j, Y, g:i a", strtotime($order['order_date_time']))); ?></td>
+                    <td>
+                        <?php 
+                           if($order['order_status'] == 0){
+                            echo "Pending";
+                           }else if($order['order_status'] == 1){
+                             echo "Confirmed Order";
+                           }else if($order['order_status'] == 2){
+                             echo "On Delivery Process";
+                           }else{
+                            echo "<span style='color:green; font-weight: bold;'>Delivered</span>";
+                           }
+                        ?>
+                    </td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
