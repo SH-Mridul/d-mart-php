@@ -30,8 +30,7 @@
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="orders.php">Orders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="users.php">Users</a></li>
                     <li class="nav-item">
                         <!-- Day/Night Mode Toggle Button with Icon -->
                         <button id="themeToggle" class="btn btn-link nav-link theme-toggle-icon">
