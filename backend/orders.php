@@ -88,7 +88,7 @@
                                                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                                                 echo "<td>" . htmlspecialchars($row['total_amount']) . "</td>";
                                                                 echo "<td>".htmlspecialchars(date("F j, Y, g:i a", strtotime($row['order_date_time'])))."</td>";
-                                                                echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'>Full Details</a></td>";
+                                                                echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-success btn-sm'>Full Details</a></td>";
                                                                 echo "</tr>";
                                                                 $counter++;
                                                             }
@@ -124,7 +124,7 @@
                                                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                                                 echo "<td>" . htmlspecialchars($row['total_amount']) . "</td>";
                                                                 echo "<td>".htmlspecialchars(date("F j, Y, g:i a", strtotime($row['order_date_time'])))."</td>";
-                                                                echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'>Full Details</a></td>";
+                                                                echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-success btn-sm'>Full Details</a></td>";
                                                                 echo "</tr>";
                                                                 $counter++;
                                                             }
@@ -161,7 +161,7 @@
                                                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                                                 echo "<td>" . htmlspecialchars($row['total_amount']) . "</td>";
                                                                 echo "<td>".htmlspecialchars(date("F j, Y, g:i a", strtotime($row['order_date_time'])))."</td>";
-                                                                echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'>Full Details</a></td>";
+                                                                echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-success btn-sm'>Full Details</a></td>";
                                                                 echo "</tr>";
                                                                 $counter++;
                                                             }
@@ -199,7 +199,7 @@
                                                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                                                 echo "<td>" . htmlspecialchars($row['total_amount']) . "</td>";
                                                                 echo "<td>".htmlspecialchars(date("F j, Y, g:i a", strtotime($row['order_date_time'])))."</td>";
-                                                                echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'>Full Details</a></td>";
+                                                                echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-success btn-sm'>Full Details</a></td>";
                                                                 echo "</tr>";
                                                                 $counter++;
                                                             }

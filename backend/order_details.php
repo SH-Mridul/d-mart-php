@@ -128,15 +128,15 @@
                 <form action="order_confirm.php" method="POST" target="_blank">
                     <input type="hidden" name="order_id" value="<?= $order_id ?>">
                     <?php if($order['order_status'] == 0){ ?>
-                        <button type="submit" class="btn btn-danger">Confirm Order</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Confirm Order</button>
                     <?php } ?>
 
                      <?php if($order['order_status'] == 1){ ?>
-                        <button type="submit" class="btn btn-danger">On Delivery Order</button>
+                        <button type="submit" class="btn btn-danger btn-sm">On Delivery Order</button>
                     <?php } ?>
 
                      <?php if($order['order_status'] == 2){ ?>
-                        <button type="submit" class="btn btn-danger">Deliverd</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Deliverd</button>
                     <?php } ?>
                 </form>
             </div>
