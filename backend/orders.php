@@ -2,16 +2,16 @@
     require 'login_check.php';
     require 'database_connection.php';
     // Query to select orders with specific conditions
-    $pending_order_sql = "SELECT id, name, total_amount FROM orders WHERE status = 1 AND order_status = 0";
+    $pending_order_sql = "SELECT id, name, total_amount, order_date_time FROM orders WHERE status = 1 AND order_status = 0";
     $pending_order_result = mysqli_query($conn, $pending_order_sql);
 
-    $confirm_order_sql = "SELECT id, name, total_amount FROM orders WHERE status = 1 AND order_status = 1";
+    $confirm_order_sql = "SELECT id, name, total_amount,order_date_time FROM orders WHERE status = 1 AND order_status = 1";
     $confirm_order_result = mysqli_query($conn, $confirm_order_sql);
 
-    $ondelivary_order_sql = "SELECT id, name, total_amount FROM orders WHERE status = 1 AND order_status = 2";
+    $ondelivary_order_sql = "SELECT id, name, total_amount,order_date_time FROM orders WHERE status = 1 AND order_status = 2";
     $ondelivary_order_result = mysqli_query($conn, $ondelivary_order_sql);
 
-    $deliverd_order_sql = "SELECT id, name, total_amount FROM orders WHERE status = 1 AND order_status = 3";
+    $deliverd_order_sql = "SELECT id, name, total_amount,order_date_time FROM orders WHERE status = 1 AND order_status = 3";
     $deliverd_order_result = mysqli_query($conn, $deliverd_order_sql);
 ?>
 <!DOCTYPE html>
@@ -22,6 +22,13 @@
 
     <!-- Navbar -->
     <?php require 'assets/menu.php'; ?>
+
+    <style>
+        /* Custom active tab color */
+        .nav-link.active {
+            background-color: #28a745 !important;  /* Adjust the color as needed */
+        }
+    </style>
 
     <!-- Dashboard Wrapper to Center the Content -->
     <h2 class="dashboard-title mt-4">Orders</h2>
@@ -48,10 +55,10 @@
                             <!-- Left Tab Menu -->
                             <div class="col-md-3">
                                 <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-p-order" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Pending Order</button>
-                                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-c-order" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Confirmed Order</button>
-                                    <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-p-d" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">On Delivery Process</button>
-                                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-d-d" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Delivered</button>
+                                    <button class="nav-link bg-secondary active mb-3" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-p-order" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Pending Order</button>
+                                    <button class="nav-link bg-secondary mb-3" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-c-order" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Confirmed Order</button>
+                                    <button class="nav-link bg-secondary mb-3" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-p-d" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">On Delivery Process</button>
+                                    <button class="nav-link bg-secondary" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-d-d" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Delivered</button>
                                 </div>
                             </div>
 
@@ -67,6 +74,7 @@
                                                         <th scope="col">#</th>
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Total Amount</th>
+                                                        <th scope="col">Order Date</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -79,12 +87,13 @@
                                                                 echo "<th scope='row'>" . $counter . "</th>";
                                                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                                                 echo "<td>" . htmlspecialchars($row['total_amount']) . "</td>";
+                                                                echo "<td>".htmlspecialchars(date("F j, Y, g:i a", strtotime($row['order_date_time'])))."</td>";
                                                                 echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'>Full Details</a></td>";
                                                                 echo "</tr>";
                                                                 $counter++;
                                                             }
                                                         } else {
-                                                            echo "<tr><td colspan='4' class='text-center'>No orders found</td></tr>";
+                                                            echo "<tr><td colspan='5' class='text-center'>No orders found</td></tr>";
                                                         }
                                                     ?>
                                                 </tbody>
@@ -101,6 +110,7 @@
                                                         <th scope="col">#</th>
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Total Amount</th>
+                                                        <th scope="col">Order Date</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -113,12 +123,13 @@
                                                                 echo "<th scope='row'>" . $counter . "</th>";
                                                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                                                 echo "<td>" . htmlspecialchars($row['total_amount']) . "</td>";
+                                                                echo "<td>".htmlspecialchars(date("F j, Y, g:i a", strtotime($row['order_date_time'])))."</td>";
                                                                 echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'>Full Details</a></td>";
                                                                 echo "</tr>";
                                                                 $counter++;
                                                             }
                                                         } else {
-                                                            echo "<tr><td colspan='4' class='text-center'>No orders found</td></tr>";
+                                                            echo "<tr><td colspan='5' class='text-center'>No orders found</td></tr>";
                                                         }
                                                     ?>
                                                 </tbody>
@@ -136,6 +147,7 @@
                                                         <th scope="col">#</th>
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Total Amount</th>
+                                                        <th scope="col">Order Date</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -148,12 +160,13 @@
                                                                 echo "<th scope='row'>" . $counter . "</th>";
                                                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                                                 echo "<td>" . htmlspecialchars($row['total_amount']) . "</td>";
+                                                                echo "<td>".htmlspecialchars(date("F j, Y, g:i a", strtotime($row['order_date_time'])))."</td>";
                                                                 echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'>Full Details</a></td>";
                                                                 echo "</tr>";
                                                                 $counter++;
                                                             }
                                                         } else {
-                                                            echo "<tr><td colspan='4' class='text-center'>No orders found</td></tr>";
+                                                            echo "<tr><td colspan='5' class='text-center'>No orders found</td></tr>";
                                                         }
                                                     ?>
                                                 </tbody>
@@ -172,6 +185,7 @@
                                                         <th scope="col">#</th>
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Total Amount</th>
+                                                        <th scope="col">Order Date</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
@@ -184,12 +198,13 @@
                                                                 echo "<th scope='row'>" . $counter . "</th>";
                                                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                                                 echo "<td>" . htmlspecialchars($row['total_amount']) . "</td>";
+                                                                echo "<td>".htmlspecialchars(date("F j, Y, g:i a", strtotime($row['order_date_time'])))."</td>";
                                                                 echo "<td><a href='order_details.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'>Full Details</a></td>";
                                                                 echo "</tr>";
                                                                 $counter++;
                                                             }
                                                         } else {
-                                                            echo "<tr><td colspan='4' class='text-center'>No orders found</td></tr>";
+                                                            echo "<tr><td colspan='5' class='text-center'>No orders found</td></tr>";
                                                         }
                                                     ?>
                                                 </tbody>

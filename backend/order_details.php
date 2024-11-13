@@ -67,6 +67,11 @@
                         </div>
 
                         <div class="col-md-12 mb-2">
+                            <label class="form-label">Order Date:</label>
+                            <input type="text" class="form-control form-control-sm" value="<?= htmlspecialchars(date("F j, Y, g:i a", strtotime($order['order_date_time']))) ?>" readonly>
+                        </div>
+
+                        <div class="col-md-12 mb-2">
                             <label class="form-label">Address:</label>
                             <textarea class="form-control form-control-sm" readonly><?= htmlspecialchars($order['address']) ?></textarea>
                         </div>
@@ -119,7 +124,7 @@
             </div>
 
             <!-- PDF Generation Button -->
-            <div class="text-center mt-4">
+            <div class="text-center mt-4 mb-3">
                 <form action="order_confirm.php" method="POST" target="_blank">
                     <input type="hidden" name="order_id" value="<?= $order_id ?>">
                     <?php if($order['order_status'] == 0){ ?>
@@ -144,5 +149,6 @@
 
     <!-- Bootstrap JavaScript Bundle with Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
